@@ -1,0 +1,19 @@
+{
+  "approved": [
+    {
+      "name": "salmanyeager2",
+      "email": "salmanyeager2@gmail.com",
+      "password": "tdtudtututyr65676",
+      "approvedAt": "2026-07-13T09:52:40.703Z"
+    }
+  ],
+  "pending": [
+    {
+      "name": "Test User",
+      "email": "testuser@example.com",
+      "password": "test123",
+      "token": "d39bc826e088258be1bb26436255883aabb0379cb232125e6ff622a2fc708231",
+      "createdAt": "2026-07-13T09:49:00.334Z"
+    }
+  ]
+}
