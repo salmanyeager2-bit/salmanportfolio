@@ -297,48 +297,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===== #21 Multi-step Form =====
+    // ===== #21 Contact Form =====
     const contactForm = document.getElementById('contactForm');
-    const formSteps = contactForm.querySelectorAll('.form-step');
-    const stepperSteps = document.querySelectorAll('#contactStepper .step');
-    let currentStep = 1;
-
-    function goToStep(step) {
-        formSteps.forEach(fs => fs.classList.remove('active'));
-        stepperSteps.forEach((ss, i) => {
-            ss.classList.remove('active', 'completed');
-            if (i + 1 < step) ss.classList.add('completed');
-            if (i + 1 === step) ss.classList.add('active');
-        });
-
-        const targetStep = contactForm.querySelector(`.form-step[data-step="${step}"]`);
-        if (targetStep) targetStep.classList.add('active');
-        currentStep = step;
-    }
-
-    contactForm.querySelectorAll('.next-step').forEach(btn => {
-        btn.addEventListener('click', () => {
-            if (validateStep(currentStep)) {
-                goToStep(currentStep + 1);
-            }
-        });
-    });
-
-    contactForm.querySelectorAll('.prev-step').forEach(btn => {
-        btn.addEventListener('click', () => {
-            goToStep(currentStep - 1);
-        });
-    });
 
     // ===== #54 Form Validation =====
-    function validateStep(step) {
-        const stepEl = contactForm.querySelector(`.form-step[data-step="${step}"]`);
-        const inputs = stepEl.querySelectorAll('[required]');
+    function validateForm() {
+        const inputs = contactForm.querySelectorAll('[required]');
         let valid = true;
 
         inputs.forEach(input => {
-            const error = input.closest('.form-group').querySelector('.form-error');
-            if (!input.value.trim()) {
+            const error = input.closest('.form-group')?.querySelector('.form-error');
+            if (input.type === 'checkbox' && !input.checked) {
+                input.classList.add('error');
+                if (error) error.textContent = 'Please check this box';
+                valid = false;
+            } else if (!input.value.trim()) {
                 input.classList.add('error');
                 if (error) error.textContent = 'This field is required';
                 valid = false;
@@ -378,24 +351,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===== #55 Form Auto-Save =====
-    function autoSave() {
-        contactForm.querySelectorAll('[data-autosave]').forEach(input => {
-            const key = input.dataset.autosave;
-            const saved = localStorage.getItem('portfolio-' + key);
-            if (saved) input.value = saved;
-
-            input.addEventListener('input', () => {
-                localStorage.setItem('portfolio-' + key, input.value);
-            });
-        });
-    }
-    autoSave();
-
-    // Form Submit - Brevo API
+    // Form Submit - Brevo API with mailto fallback
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        if (!validateStep(currentStep)) return;
+        if (!validateForm()) return;
 
         const submitBtn = document.getElementById('submitBtn');
         const btnText = submitBtn.querySelector('.btn-text');
@@ -405,41 +364,66 @@ document.addEventListener('DOMContentLoaded', () => {
         btnLoader.hidden = false;
         submitBtn.disabled = true;
 
-        try {
-            const formData = {
-                name: document.getElementById('contactName').value.trim(),
-                email: document.getElementById('contactEmail').value.trim(),
-                phone: document.getElementById('contactPhone').value.trim(),
-                phoneCode: document.getElementById('phoneCode').value,
-                subject: document.getElementById('contactSubject').value,
-                budget: document.querySelector('input[name="budget"]:checked')?.value || '',
-                services: Array.from(document.querySelectorAll('input[name="services"]:checked')).map(cb => cb.value),
-                deadline: document.getElementById('contactDeadline').value,
-                message: document.getElementById('contactMessage').value.trim(),
-                brandColor: document.getElementById('brandColor').value
-            };
+        const formData = {
+            name: document.getElementById('contactName').value.trim(),
+            email: document.getElementById('contactEmail').value.trim(),
+            phone: document.getElementById('contactPhone').value.trim(),
+            phoneCode: document.getElementById('phoneCode').value,
+            subject: document.getElementById('contactSubject').value,
+            budget: document.querySelector('input[name="budget"]:checked')?.value || '',
+            services: Array.from(document.querySelectorAll('input[name="services"]:checked')).map(cb => cb.value),
+            deadline: document.getElementById('contactDeadline').value,
+            message: document.getElementById('contactMessage').value.trim()
+        };
 
+        const subjectMap = { 'web': 'Web Development', 'mobile': 'Mobile App', 'design': 'UI/UX Design', 'consulting': 'Consulting', 'other': 'Other' };
+        const subjectText = subjectMap[formData.subject] || formData.subject;
+
+        // Fallback: email client khule ga taake message email tak zaroor pahunche
+        function sendViaMailto() {
+            const to = 'salmanyeager2@gmail.com';
+            const lines = [
+                `Name: ${formData.name}`,
+                `Email: ${formData.email}`,
+                formData.phone ? `Phone: ${formData.phoneCode} ${formData.phone}` : '',
+                `Subject: ${subjectText}`,
+                formData.budget ? `Budget: $${formData.budget}` : '',
+                formData.services.length ? `Services: ${formData.services.join(', ')}` : '',
+                formData.deadline ? `Deadline: ${formData.deadline}` : '',
+                '',
+                `Message:`,
+                formData.message
+            ].filter(Boolean);
+            const mailtoUrl = `mailto:${to}?subject=${encodeURIComponent('Contact: ' + subjectText + ' - ' + formData.name)}&body=${encodeURIComponent(lines.join('\n'))}`;
+            window.location.href = mailtoUrl;
+            showToast('info', 'Email App Open!', 'Apna email app khula hai. Bas SEND dabao, message aapki email par aa jayega.');
+        }
+
+        try {
             const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
 
-            const result = await response.json();
+            let result = null;
+            try {
+                result = await response.json();
+            } catch (e) {
+                result = null;
+            }
 
-            if (result.success) {
+            if (result && result.success) {
                 showToast('success', 'Message Sent!', 'Thank you for contacting me. I will get back to you soon.');
-                goToStep(1);
                 contactForm.reset();
-                contactForm.querySelectorAll('[data-autosave]').forEach(input => {
-                    localStorage.removeItem('portfolio-' + input.dataset.autosave);
-                });
-            } else {
+            } else if (result && result.error) {
                 showToast('error', 'Error!', result.error || 'Something went wrong.');
+            } else {
+                sendViaMailto();
             }
         } catch (error) {
             console.error('Submit error:', error);
-            showToast('error', 'Error!', 'Network error. Please try again.');
+            sendViaMailto();
         } finally {
             btnText.hidden = false;
             btnLoader.hidden = true;
@@ -793,119 +777,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ===== #53 File Upload with Drag & Drop =====
-    const dropZone = document.getElementById('fileDropZone');
-    const fileInput = document.getElementById('fileInput');
-    const fileList = document.getElementById('fileList');
-    const uploadedFiles = [];
-
-    if (dropZone) {
-        dropZone.addEventListener('click', () => fileInput.click());
-
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('dragover');
-        });
-
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('dragover');
-        });
-
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('dragover');
-            handleFiles(e.dataTransfer.files);
-        });
-
-        fileInput.addEventListener('change', () => {
-            handleFiles(fileInput.files);
-        });
-
-        function handleFiles(files) {
-            Array.from(files).forEach(file => {
-                if (file.size > 10 * 1024 * 1024) {
-                    showToast('error', 'File Too Large', `${file.name} exceeds 10MB limit`);
-                    return;
-                }
-                uploadedFiles.push(file);
-            });
-            renderFiles();
-        }
-
-        function renderFiles() {
-            fileList.innerHTML = uploadedFiles.map((file, i) =>
-                `<div class="file-item">
-                    <span class="file-item-name"><i data-lucide="file"></i> ${file.name} (${(file.size / 1024).toFixed(1)} KB)</span>
-                    <button class="file-remove" data-index="${i}"><i data-lucide="trash-2"></i></button>
-                </div>`
-            ).join('');
-            lucide.createIcons();
-
-            fileList.querySelectorAll('.file-remove').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    uploadedFiles.splice(parseInt(btn.dataset.index), 1);
-                    renderFiles();
-                });
-            });
-        }
-    }
-
-    // ===== #46 Star Rating =====
-    const starRating = document.getElementById('starRating');
-    if (starRating) {
-        const stars = starRating.querySelectorAll('i');
-        let selectedRating = 0;
-
-        stars.forEach(star => {
-            star.addEventListener('mouseenter', () => {
-                const rating = parseInt(star.dataset.rating);
-                stars.forEach(s => {
-                    s.classList.toggle('active', parseInt(s.dataset.rating) <= rating);
-                });
-            });
-
-            star.addEventListener('click', () => {
-                selectedRating = parseInt(star.dataset.rating);
-            });
-        });
-
-        starRating.addEventListener('mouseleave', () => {
-            stars.forEach(s => {
-                s.classList.toggle('active', parseInt(s.dataset.rating) <= selectedRating);
-            });
-        });
-    }
-
-    // ===== #47 Color Picker =====
-    const colorPicker = document.getElementById('brandColor');
-    const colorValue = document.getElementById('colorValue');
-    if (colorPicker) {
-        colorPicker.addEventListener('input', () => {
-            colorValue.textContent = colorPicker.value;
-        });
-    }
-
-    // ===== #49 OTP Input =====
-    const otpDigits = document.querySelectorAll('.otp-digit');
-    otpDigits.forEach((digit, index) => {
-        digit.addEventListener('input', (e) => {
-            if (e.target.value && index < otpDigits.length - 1) {
-                otpDigits[index + 1].focus();
-            }
-        });
-
-        digit.addEventListener('keydown', (e) => {
-            if (e.key === 'Backspace' && !e.target.value && index > 0) {
-                otpDigits[index - 1].focus();
-            }
-        });
-
-        // Only allow numbers
-        digit.addEventListener('input', (e) => {
-            e.target.value = e.target.value.replace(/[^0-9]/g, '');
-        });
-    });
-
     // ===== #57 Search with Autocomplete =====
     const searchInput = document.getElementById('searchInput');
     const autocompleteResults = document.getElementById('autocompleteResults');
@@ -989,13 +860,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightboxImage = document.getElementById('lightboxImage');
     const lightboxCaption = document.getElementById('lightboxCaption');
 
-    const gradientColors = [
-        'linear-gradient(135deg, #667eea, #764ba2)',
-        'linear-gradient(135deg, #a18cd1, #fbc2eb)',
-        'linear-gradient(135deg, #43e97b, #38f9d7)',
-        'linear-gradient(135deg, #ff9a9e, #fecfef)',
-        'linear-gradient(135deg, #ffecd2, #fcb69f)',
-        'linear-gradient(135deg, #89f7fe, #66a6ff)',
+    const projectImages = [
+        'images/ecommerce-1.jpg',
+        'images/task-1.jpg',
+        'images/fitness-1.jpg',
+        'images/brand-1.jpg',
+        'images/dashboard-1.jpg',
+        'images/food-1.jpg',
     ];
 
     const projectNames = [
@@ -1010,7 +881,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.project-lightbox').forEach(btn => {
         btn.addEventListener('click', () => {
             const index = parseInt(btn.dataset.project);
-            lightboxImage.style.background = gradientColors[index] || gradientColors[0];
+            lightboxImage.style.backgroundImage = `url(${projectImages[index] || projectImages[0]})`;
             lightboxCaption.textContent = projectNames[index] || '';
             lightboxOverlay.classList.add('show');
             document.body.style.overflow = 'hidden';
@@ -1018,7 +889,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('aboutLightbox')?.addEventListener('click', () => {
-        lightboxImage.style.background = 'linear-gradient(135deg, var(--primary), var(--secondary))';
+        lightboxImage.style.backgroundImage = "url('images/profile.jpg')";
         lightboxCaption.textContent = 'Salman Rehman - Web Developer';
         lightboxOverlay.classList.add('show');
         document.body.style.overflow = 'hidden';
@@ -1439,22 +1310,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // ===== #46 Floating Labels (auto-add to form groups) =====
-    document.querySelectorAll('.form-group').forEach(group => {
-        const input = group.querySelector('input:not([type="radio"]):not([type="checkbox"]):not([type="color"]):not([type="file"]):not(.otp-digit):not(.captcha-input):not(.tag-input-field):not(.password-toggle)');
-        const select = group.querySelector('select');
-        const textarea = group.querySelector('textarea');
-
-        if (input && input.placeholder) {
-            input.placeholder = ' ';
-            group.classList.add('floating');
-        }
-        if (textarea && textarea.placeholder) {
-            textarea.placeholder = ' ';
-            group.classList.add('floating');
-        }
-    });
-
     // ===== Smooth Section Reveal on Scroll =====
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -1471,41 +1326,6 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         revealObserver.observe(el);
     });
-
-    // ===== Custom Cursor Follower =====
-    const cursorDot = document.getElementById('cursorDot');
-    const cursorOutline = document.getElementById('cursorOutline');
-    if (cursorDot && cursorOutline && window.matchMedia('(hover: hover)').matches) {
-        let mouseX = 0, mouseY = 0;
-        let outlineX = 0, outlineY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursorDot.style.left = mouseX + 'px';
-            cursorDot.style.top = mouseY + 'px';
-        });
-
-        function animateCursorOutline() {
-            outlineX += (mouseX - outlineX) * 0.15;
-            outlineY += (mouseY - outlineY) * 0.15;
-            cursorOutline.style.left = outlineX + 'px';
-            cursorOutline.style.top = outlineY + 'px';
-            requestAnimationFrame(animateCursorOutline);
-        }
-        animateCursorOutline();
-
-        document.querySelectorAll('a, button, .project-card, .flip-card, .tab-btn, .theme-toggle, .hamburger').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursorDot.classList.add('hover');
-                cursorOutline.classList.add('hover');
-            });
-            el.addEventListener('mouseleave', () => {
-                cursorDot.classList.remove('hover');
-                cursorOutline.classList.remove('hover');
-            });
-        });
-    }
 
     // ===== 3D Tilt Effect on Project Cards =====
     document.querySelectorAll('.project-card').forEach(card => {

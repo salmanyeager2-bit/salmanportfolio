@@ -215,7 +215,7 @@ app.get('/api/users', async (req, res) => {
 // ===== CONTACT FORM =====
 app.post('/api/contact', async (req, res) => {
     try {
-        const { name, email, phone, phoneCode, subject, budget, services, deadline, message, brandColor } = req.body;
+        const { name, email, phone, phoneCode, subject, budget, services, deadline, message } = req.body;
 
         if (!name || !email || !subject || !message) {
             return res.status(400).json({ success: false, error: 'Name, email, subject aur message zaroori hain.' });
@@ -244,7 +244,6 @@ app.post('/api/contact', async (req, res) => {
                     ${budget ? `<p><strong>Budget:</strong> $${budget}</p>` : ''}
                     ${services !== 'Not specified' ? `<p><strong>Services:</strong> ${servicesList}</p>` : ''}
                     ${deadline ? `<p><strong>Deadline:</strong> ${deadline}</p>` : ''}
-                    ${brandColor ? `<p><strong>Brand Color:</strong> <span style="display:inline-block;width:14px;height:14px;background:${brandColor};border-radius:50%;vertical-align:middle;margin-right:4px;"></span>${brandColor}</p>` : ''}
                 </div>
                 <div style="background:#f8fafc;border-radius:8px;padding:20px;">
                     <h2 style="color:#6366f1;margin:0 0 15px;font-size:18px;">Message</h2>
@@ -256,7 +255,7 @@ app.post('/api/contact', async (req, res) => {
             </div>
         </div>`;
 
-        const plainText = `Name: ${name}\nEmail: ${email}\n${phone ? `Phone: ${phoneCode || ''} ${phone}\n` : ''}Subject: ${subjectText}\n${budget ? `Budget: $${budget}\n` : ''}${services !== 'Not specified' ? `Services: ${servicesList}\n` : ''}${deadline ? `Deadline: ${deadline}\n` : ''}${brandColor ? `Brand Color: ${brandColor}\n` : ''}\nMessage:\n${message}`;
+        const plainText = `Name: ${name}\nEmail: ${email}\n${phone ? `Phone: ${phoneCode || ''} ${phone}\n` : ''}Subject: ${subjectText}\n${budget ? `Budget: $${budget}\n` : ''}${services !== 'Not specified' ? `Services: ${servicesList}\n` : ''}${deadline ? `Deadline: ${deadline}\n` : ''}\nMessage:\n${message}`;
 
         const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
         const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
