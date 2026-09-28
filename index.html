@@ -1,19 +1,184 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salman Rehman | Web Developer Portfolio</title>
-    <meta name="description" content="Salman Rehman - Professional Web Developer Portfolio">
+
+    <!-- ============ SEO ============ -->
+    <title>Salman Rehman | Web Developer in Pakistan â€“ Portfolio</title>
+    <meta name="description" content="Salman Rehman is a web developer in Pakistan building fast, responsive websites and apps with React, Node.js, MongoDB and UI/UX. View projects and hire me.">
+    <meta name="author" content="Salman Rehman">
+    <meta name="keywords" content="Salman, Salman Rehman, Salman web developer, Salman Rehman web developer, web developer Pakistan, freelance web developer Pakistan, React developer Pakistan, Node.js developer Pakistan, full stack developer Pakistan, portfolio Salman Rehman">
+    <link rel="canonical" href="https://salmanwebs.netlify.app/">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <meta name="geo.region" content="PK">
+    <meta name="geo.placename" content="Pakistan">
+    <link rel="alternate" hreflang="en" href="https://salmanwebs.netlify.app/">
+    <link rel="alternate" hreflang="x-default" href="https://salmanwebs.netlify.app/">
+    <!-- Google Search Console verification token (GSC se copy karke yahan paste karein) -->
+    <!-- <meta name="google-site-verification" content="YOUR_TOKEN_HERE"> -->
+
+    <!-- ============ Open Graph (Facebook / WhatsApp / LinkedIn share card) ============ -->
+    <meta property="og:type" content="profile">
+    <meta property="og:site_name" content="Salman Rehman â€“ Web Developer">
+    <meta property="og:title" content="Salman Rehman | Web Developer in Pakistan">
+    <meta property="og:description" content="Portfolio of Salman Rehman â€“ web developer in Pakistan building fast, responsive websites and web apps with React, Node.js and MongoDB.">
+    <meta property="og:url" content="https://salmanwebs.netlify.app/">
+    <meta property="og:image" content="https://salmanwebs.netlify.app/images/profile.jpg">
+    <meta property="og:image:alt" content="Salman Rehman â€“ Web Developer">
+    <meta property="og:locale" content="en_US">
+
+    <!-- ============ Twitter Card ============ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Salman Rehman | Web Developer in Pakistan">
+    <meta name="twitter:description" content="Portfolio of Salman Rehman â€“ web developer in Pakistan building fast, responsive websites and web apps.">
+    <meta name="twitter:image" content="https://salmanwebs.netlify.app/images/profile.jpg">
+    <meta name="twitter:image:alt" content="Salman Rehman â€“ Web Developer">
+
+    <!-- ============ Favicon ============ -->
+    <link rel="icon" href="https://ui-avatars.com/api/?name=SR&background=6366f1&color=fff&size=64&bold=true">
+    <link rel="apple-touch-icon" href="https://ui-avatars.com/api/?name=SR&background=6366f1&color=fff&size=180&bold=true">
+
+    <!-- ============ Performance ============ -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="preload" as="image" href="images/profile.jpg" fetchpriority="high">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.js" defer></script>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#6366f1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google-site-verification" content="EcH-ek3zZdMPmIOD5QPBSgeNaSEormE_sY4sI6C-_gA" />
+
+    <!-- ============ Structured Data (JSON-LD) â€“ Google knowledge graph ke liye ============ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://salmanwebs.netlify.app/#website",
+          "url": "https://salmanwebs.netlify.app/",
+          "name": "Salman Rehman â€“ Web Developer Portfolio",
+          "description": "Portfolio of Salman Rehman, a web developer in Pakistan.",
+          "inLanguage": "en",
+          "publisher": { "@id": "https://salmanwebs.netlify.app/#person" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://salmanwebs.netlify.app/#person",
+          "name": "Salman Rehman",
+          "alternateName": ["Salman", "Salman Yeager", "Salman Rehman Web Developer"],
+          "url": "https://salmanwebs.netlify.app/",
+          "image": {
+            "@type": "ImageObject",
+            "url": "https://salmanwebs.netlify.app/images/profile.jpg",
+            "caption": "Salman Rehman â€“ Web Developer"
+          },
+          "email": "mailto:salmanyeager2@gmail.com",
+          "jobTitle": "Web Developer",
+          "description": "Salman Rehman is a web developer based in Pakistan with 5+ years of experience building responsive websites, web applications and mobile apps using React, Node.js, MongoDB, PostgreSQL and modern UI/UX practices.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "PK"
+          },
+          "jobTitleDetail": {
+            "@type": "Occupation",
+            "name": "Full Stack Web Developer",
+            "skills": "HTML5, CSS3, JavaScript, React, Vue.js, Node.js, Express, Python, Django, MongoDB, PostgreSQL, GraphQL, Tailwind CSS, Figma, Docker, AWS, Git"
+          },
+          "knowsAbout": [
+            "Web Development", "Frontend Development", "Backend Development",
+            "Full Stack Development", "React", "Vue.js", "Node.js", "Express",
+            "Python", "Django", "MongoDB", "PostgreSQL", "GraphQL", "Tailwind CSS",
+            "UI/UX Design", "SEO", "REST APIs", "Responsive Web Design"
+          ],
+          "knowsLanguage": ["en", "ur", "pk"],
+          "hasOccupation": {
+            "@type": "Occupation",
+            "name": "Web Developer",
+            "occupationLocation": {
+              "@type": "Country",
+              "name": "Pakistan"
+            }
+          },
+          "sameAs": [
+            "https://github.com/salmanyeager2-bit",
+            "https://www.linkedin.com/in/salman-yeager-3a943a43b/",
+            "https://github.com/salmanyeager2-bit/salmanwebs"
+          ],
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://salmanwebs.netlify.app/#webpage"
+          }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://salmanwebs.netlify.app/#webpage",
+          "url": "https://salmanwebs.netlify.app/",
+          "name": "Salman Rehman | Web Developer in Pakistan",
+          "description": "Portfolio of Salman Rehman â€“ web developer in Pakistan building fast, responsive websites and web apps.",
+          "inLanguage": "en",
+          "isPartOf": { "@id": "https://salmanwebs.netlify.app/#website" },
+          "about": { "@id": "https://salmanwebs.netlify.app/#person" },
+          "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "https://salmanwebs.netlify.app/images/profile.jpg"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://salmanwebs.netlify.app/#faq",
+          "isPartOf": { "@id": "https://salmanwebs.netlify.app/#webpage" },
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What technologies does Salman Rehman use?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "He works with modern web technologies including React, Vue.js, Node.js, Express, Python, Django, MongoDB, PostgreSQL and GraphQL. The best tech stack is chosen for each project's specific needs."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How long does a typical project take?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Project timelines vary based on complexity. A simple website takes 2-4 weeks, while a complex web application takes 2-3 months. A detailed timeline is provided before starting."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do you provide ongoing support?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Maintenance and support packages are offered after project completion, including bug fixes, updates, performance optimization and new feature development."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the pricing structure?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Pricing depends on project scope and requirements. Both fixed-price and hourly rate options are available. Contact with project details for a personalized quote."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can Salman Rehman work with my existing team?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. He is experienced in working collaboratively with existing teams and is comfortable with agile methodologies, code reviews and team communication tools."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <!-- #33 Skip to content link -->
@@ -85,10 +250,8 @@
 
         <div class="sidebar-footer">
             <div class="sidebar-social">
-                <a href="#" class="social-link" aria-label="GitHub"><i data-lucide="github"></i></a>
-                <a href="#" class="social-link" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-                <a href="#" class="social-link" aria-label="Twitter"><i data-lucide="twitter"></i></a>
-                <a href="#" class="social-link" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+                <a href="https://github.com/salmanyeager2-bit" class="social-link" aria-label="Salman Rehman on GitHub" target="_blank" rel="noopener nofollow"><i data-lucide="github"></i></a>
+                <a href="https://www.linkedin.com/in/salman-yeager-3a943a43b/" class="social-link" aria-label="Salman Rehman on LinkedIn" target="_blank" rel="noopener nofollow"><i data-lucide="linkedin"></i></a>
             </div>
             <!-- #58 CAPTCHA -->
             <div class="sidebar-captcha" id="sidebarCaptcha">
@@ -116,7 +279,7 @@
                 </button>
                 <div class="header-brand">
                     <div class="avatar avatar-sm" data-initials="SR">
-                        <img src="images/profile.jpg" alt="SR" onerror="this.style.display='none';this.parentElement.classList.add('avatar-fallback')">
+                        <img src="images/profile.jpg" alt="Salman Rehman - Web Developer" onerror="this.style.display='none';this.parentElement.classList.add('avatar-fallback')">
                     </div>
                     <span class="brand-name">Salman Rehman</span>
                 </div>
@@ -151,7 +314,7 @@
 
         <!-- #32 Quick links / shortcuts panel -->
         <div class="shortcuts-panel" id="shortcutsPanel">
-            <h4>Quick Links <kbd>Ctrl+K</kbd></h4>
+            <h3>Quick Links <kbd>Ctrl+K</kbd></h3>
             <div class="shortcut-list">
                 <a href="#hero" class="shortcut-item"><i data-lucide="home"></i> Home</a>
                 <a href="#about" class="shortcut-item"><i data-lucide="user"></i> About</a>
@@ -270,7 +433,7 @@
                             <div class="about-detail">
                                 <i data-lucide="mail"></i>
                                 <div>
-                                    <strong>Email:</strong> salman@example.com
+                                    <strong>Email:</strong> <a href="mailto:salmanyeager2@gmail.com">salmanyeager2@gmail.com</a>
                                 </div>
                             </div>
                             <div class="about-detail">
@@ -847,24 +1010,23 @@
                     <div class="contact-info">
                         <div class="contact-card">
                             <div class="contact-icon"><i data-lucide="map-pin"></i></div>
-                            <h4>Location</h4>
+                            <h3>Location</h3>
                             <p>Pakistan</p>
                         </div>
                         <div class="contact-card">
                             <div class="contact-icon"><i data-lucide="mail"></i></div>
-                            <h4>Email</h4>
-                            <p>salman@example.com</p>
+                            <h3>Email</h3>
+                            <p><a href="mailto:salmanyeager2@gmail.com">salmanyeager2@gmail.com</a></p>
                         </div>
                         <div class="contact-card">
                             <div class="contact-icon"><i data-lucide="phone"></i></div>
-                            <h4>Phone</h4>
-                            <p>+92 300 1234567</p>
+                            <h3>Phone</h3>
+                            <!-- Apna asli number yahan likhein, format: +92 3XX XXXXXXX -->
+                            <p><a href="tel:+923001234567">+92 300 1234567</a></p>
                         </div>
                         <div class="contact-social">
-                            <a href="#" class="social-link-lg"><i data-lucide="github"></i></a>
-                            <a href="#" class="social-link-lg"><i data-lucide="linkedin"></i></a>
-                            <a href="#" class="social-link-lg"><i data-lucide="twitter"></i></a>
-                            <a href="#" class="social-link-lg"><i data-lucide="instagram"></i></a>
+                            <a href="https://github.com/salmanyeager2-bit" class="social-link-lg" aria-label="Salman Rehman on GitHub" target="_blank" rel="noopener nofollow"><i data-lucide="github"></i></a>
+                            <a href="https://www.linkedin.com/in/salman-yeager-3a943a43b/" class="social-link-lg" aria-label="Salman Rehman on LinkedIn" target="_blank" rel="noopener nofollow"><i data-lucide="linkedin"></i></a>
                         </div>
                     </div>
                     <div class="contact-form-wrapper">
@@ -885,12 +1047,12 @@
                                 <label for="contactPhone">Phone Number</label>
                                 <div class="phone-input">
                                     <select id="phoneCode" class="phone-code">
-                                        <option value="+92">🇵🇰 +92</option>
-                                        <option value="+1">🇺🇸 +1</option>
-                                        <option value="+44">🇬🇧 +44</option>
-                                        <option value="+91">🇮🇳 +91</option>
-                                        <option value="+971">🇦🇪 +971</option>
-                                        <option value="+966">🇸🇦 +966</option>
+                                        <option value="+92">ðŸ‡µðŸ‡° +92</option>
+                                        <option value="+1">ðŸ‡ºðŸ‡¸ +1</option>
+                                        <option value="+44">ðŸ‡¬ðŸ‡§ +44</option>
+                                        <option value="+91">ðŸ‡®ðŸ‡³ +91</option>
+                                        <option value="+971">ðŸ‡¦ðŸ‡ª +971</option>
+                                        <option value="+966">ðŸ‡¸ðŸ‡¦ +966</option>
                                     </select>
                                     <input type="tel" id="contactPhone" name="phone" placeholder="300 1234567">
                                 </div>
@@ -992,14 +1154,14 @@
                     <div class="footer-col">
                         <div class="footer-brand">
                             <div class="avatar avatar-md" data-initials="SR">
-                                <img src="images/profile.jpg" alt="SR" onerror="this.style.display='none';this.parentElement.classList.add('avatar-fallback')">
+                                <img src="images/profile.jpg" alt="Salman Rehman - Web Developer" onerror="this.style.display='none';this.parentElement.classList.add('avatar-fallback')">
                             </div>
-                            <h3>Salman Rehman</h3>
+                            <h2>Salman Rehman</h2>
                         </div>
                         <p>Passionate web developer creating beautiful, functional, and user-centered digital experiences.</p>
                     </div>
                     <div class="footer-col">
-                        <h4>Quick Links</h4>
+                        <h3>Quick Links</h3>
                         <ul>
                             <li><a href="#hero">Home</a></li>
                             <li><a href="#about">About</a></li>
@@ -1008,7 +1170,7 @@
                         </ul>
                     </div>
                     <div class="footer-col">
-                        <h4>Services</h4>
+                        <h3>Services</h3>
                         <ul>
                             <li><a href="#services">Web Development</a></li>
                             <li><a href="#services">Mobile Apps</a></li>
@@ -1017,12 +1179,10 @@
                         </ul>
                     </div>
                     <div class="footer-col">
-                        <h4>Connect</h4>
+                        <h3>Connect</h3>
                         <div class="footer-social">
-                            <a href="#" aria-label="GitHub"><i data-lucide="github"></i></a>
-                            <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-                            <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
-                            <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+                            <a href="https://github.com/salmanyeager2-bit" aria-label="Salman Rehman on GitHub" target="_blank" rel="noopener nofollow"><i data-lucide="github"></i></a>
+                            <a href="https://www.linkedin.com/in/salman-yeager-3a943a43b/" aria-label="Salman Rehman on LinkedIn" target="_blank" rel="noopener nofollow"><i data-lucide="linkedin"></i></a>
                         </div>
                     </div>
                 </div>
@@ -1221,11 +1381,11 @@
     <!-- #10 Custom 404 Page -->
     <div class="page-404" id="page404">
         <div class="page-404-code">404</div>
-        <h1 class="page-404-title">Page Not Found</h1>
+        <h2 class="page-404-title">Page Not Found</h2>
         <p class="page-404-desc">The page you're looking for doesn't exist or has been moved.</p>
         <a href="#hero" class="btn btn-primary btn-lg" id="goHome404"><i data-lucide="home"></i> Go Back Home</a>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>

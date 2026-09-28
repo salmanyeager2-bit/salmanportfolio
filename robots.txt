@@ -1,0 +1,15 @@
+# robots.txt - salmanwebs.netlify.app
+# Salman Rehman - Web Developer Portfolio
+
+User-agent: *
+Allow: /
+
+# Private / utility pages ko index na karo
+Disallow: /api/
+Disallow: /users.json
+
+# API ke liye sirf Googlebot (search results me dikhna zaroori nahi)
+Disallow: /api/approve/
+Disallow: /api/deny/
+
+Sitemap: https://salmanwebs.netlify.app/sitemap.xml
